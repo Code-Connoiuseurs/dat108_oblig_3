@@ -22,15 +22,18 @@
                     <label for="startnummer">Startnummer:</label>
                     <input type="number" autocomplete="off" autofocus min="1" placeholder="Startnummer"
                         id="startnummer">
+                        
                     <label for="deltagernavn">Deltager:</label>
                     <input type="text" placeholder="Navn på deltager" autocomplete="off" size="40" id="deltagernavn"
                         pattern="\s*\p{L}{2,}((\s+|-)\p{L}{2,})*\s*"
                         title="Tillate tegn er kun bokstaver, mellomrom og enkel bindestrek mellom delnavn">
+
                     <label for="sluttid">Sluttid:</label>
                     <input type="time" step="1" id="sluttid" title="Fyll inn både timer, minutte og sekunder"
                         min="00:00:01">
 
                     <button type="button">Registrer deltager</button>
+                    
                 </div>
                 <p class="hidden">Deltager <span></span> med startnummer <span></span> ble registrert med sluttid
                     <span></span>.</p>
@@ -41,11 +44,13 @@
                 <div class="input">
                     <label for="nedregrense">Fra: </label><input type="time" id="nedregrense" step="1"
                         title="Fyll inn nedre grense">
+
                     <label for="ovregrense">Til: </label><input type="time" id="ovregrense" step="1"
                         title="Fyll inn øvre grense">
 
                     <button type="button">Vis deltagere</button>
                 </div>
+                
                 <div class="liste">
                     <table>
                         <thead>
