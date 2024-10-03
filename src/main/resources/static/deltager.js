@@ -39,6 +39,8 @@ class DeltagerManager {
 			return;
 		}
 		
+		deltagerNavn = this.#formaterNavn(deltagerNavn);
+		
 		let nyDeltager = {
 			deltagerNavn,
 			sluttTid,
@@ -52,11 +54,23 @@ class DeltagerManager {
 		this.#startNrInput.setCustomValidity("");
 		this.#deltagerNavnInput.setCustomValidity("");
 		this.#startNrInput.focus();
+		
+		const deltagerOutputs = this.#deltagerOutput.querySelectorAll("span");
+		deltagerOutputs[0].innerText = deltagerNavn;
+		deltagerOutputs[1].innerText = startNr;
+		deltagerOutputs[2].innerText = sluttTid;
+		this.#deltagerOutput.classList.remove("hidden");
+		
 		return;
 	}
 	
+	#formaterNavn(navn) {
+	    return navn
+	        .split(/(\s+|-)/)
+	        .map(delnavn => delnavn.charAt(0).toUpperCase() + delnavn.slice(1).toLowerCase())
+	        .join("");
+	}
 	
-    // Deklarer klassen sine public og private metoder her
 }
 	
 const rootelement = document.getElementById("root");
