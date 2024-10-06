@@ -55,6 +55,7 @@ class DeltagerManager {
 		deltagerNavn = this.#formaterNavn(deltagerNavn);
 		
 		let nyDeltager = {
+			startNr,
 			deltagerNavn,
 			sluttTid,
 		};
@@ -97,48 +98,54 @@ class DeltagerManager {
 		this.#tilTidInput.setCustomValidity("");
 		this.#listeTableBody.innerHTML = "";
 
-		let sorterteDeltagere;
-		sorterteDeltagere = Object.entries(this.#deltagere);
-		sorterteDeltagere.sort((a, b) => a[1].sluttTid > b[1].sluttTid);
-		sorterteDeltagere.forEach((deltager, indeks) => deltager[2] = indeks+1);
+		let deltagere = Object.entries(this.#deltagere);
+
+		let resultater = deltagere.map((deltager, indeks) => { 
+			return {
+				plassering: indeks+1,
+				deltager: deltager[1],
+			}
+		})
+
+		resultater.sort((a,b) => a.deltager.sluttTid > b.deltager.sluttTid);
 
 		if (fraTid !== "") {
-			sorterteDeltagere = sorterteDeltagere.filter(a => a[1].sluttTid >= fraTid);
+			resultater = resultater.filter(resultat => resultat.deltager.sluttTid >= fraTid);
 		}
 
 		if (tilTid !== "") {
-			sorterteDeltagere = sorterteDeltagere.filter(a => a[1].sluttTid <= tilTid);
+			resultater = resultater.filter(resultat => resultat.deltager.sluttTid <= tilTid);
 		}
 
-		if (sorterteDeltagere.length < 1) {
+		if (resultater.length < 1) {
 			this.#listeIngenResultater.classList.remove("hidden");
 			return;
 		}
 
 		this.#listeIngenResultater.classList.add("hidden");
 	
-		sorterteDeltagere.forEach(deltager => {
+		resultater.forEach(resultat => {
 			let nyrad = document.createElement("tr");
 			let radData;
 
 			// Plassering
 			radData = document.createElement("td");
-			radData.innerText = deltager[2];
+			radData.innerText = resultat.plassering;
 			nyrad.appendChild(radData);
 
 			// Startnummer
 			radData = document.createElement("td");
-			radData.innerText = deltager[0];
+			radData.innerText = resultat.deltager.startNr;
 			nyrad.appendChild(radData);
 
 			// Navn
 			radData = document.createElement("td");
-			radData.innerText = deltager[1].deltagerNavn;
+			radData.innerText = resultat.deltager.deltagerNavn;
 			nyrad.appendChild(radData);
 
 			// Sluttid
 			radData = document.createElement("td");
-			radData.innerText = deltager[1].sluttTid;
+			radData.innerText = resultat.deltager.sluttTid;
 			nyrad.appendChild(radData);
 			
 			this.#listeTableBody.appendChild(nyrad);
