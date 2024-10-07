@@ -98,7 +98,7 @@ class DeltagerManager {
 		this.#tilTidInput.setCustomValidity("");
 		this.#listeTableBody.innerHTML = "";
 
-		let deltagere = Object.entries(this.#deltagere);
+		let deltagere = Object.entries({...this.#deltagere});
 
 		let resultater = deltagere.map((deltager, indeks) => { 
 			return {
