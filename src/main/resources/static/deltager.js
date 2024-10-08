@@ -100,14 +100,14 @@ class DeltagerManager {
 
 		let deltagere = Object.entries({...this.#deltagere});
 
+		deltagere.sort((a,b) => a.sluttTid > b.sluttTid);
+
 		let resultater = deltagere.map((deltager, indeks) => { 
 			return {
 				plassering: indeks+1,
 				deltager: deltager[1],
 			}
 		})
-
-		resultater.sort((a,b) => a.deltager.sluttTid > b.deltager.sluttTid);
 
 		if (fraTid !== "") {
 			resultater = resultater.filter(resultat => resultat.deltager.sluttTid >= fraTid);
